@@ -1,5 +1,8 @@
 import { ListTodosQuery } from "@/API"
 import { LoginRequired } from "@/components/auth"
+import { Card } from '@/components/Card'
+import { Modal } from '@/components/Modal'
+import { TodoForm } from '@/components/TodoForm'
 import { listTodos } from "@/graphql/queries"
 import { nonNull } from "@/lib/filter"
 import { query } from "@/lib/graphql"
@@ -17,6 +20,7 @@ configure()
 const TodoPage = () => {
     const [user, setUser] = useState<object>()
     const [todos, setTodos] = useState<Todo[]>([])
+    const [modalIsOpen, setModalIsOpen] = useState(false)
 
     useEffect(() => {
         return onAuthUIStateChange((_, data) => {
@@ -45,6 +49,20 @@ const TodoPage = () => {
                     <li key={todo.id}>{todo.name}</li>
                 ))}
             </ul>
+            <Modal
+                isOpen={modalIsOpen}
+                activator={
+                    <button onClick={() => setModalIsOpen(true)}>モーダルを開く</button>
+                }
+                clickOutSide={() => {
+                    setModalIsOpen(false)
+                }}
+            >
+                <Card>
+                    <h1>Todoを作成する</h1>
+                    <TodoForm postSubmit={() => setModalIsOpen(false)} />
+                </Card>
+            </Modal>
         </LoginRequired>
     )
 }
