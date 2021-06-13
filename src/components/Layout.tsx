@@ -25,6 +25,10 @@ export const Layout: FC<LayoutProps> = ({
         |{' '}
         <Link href='/about'>
           <a>About</a>
+        </Link>{' '}
+        |{' '}
+        <Link href='/todos'>
+          <a>Todo</a>
         </Link>
       </nav>
     </header>
